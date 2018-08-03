@@ -9,19 +9,20 @@ class TestQuestion extends React.Component {
     handleSelect = (e) => {
         const selected = Number(e.currentTarget.id);
         this.props.handleChoose(selected);
+        console.log(window.location.origin)
     }
 
     render() {
         return (
             <div>
                 <h3>Question {this.props.questionNumber + 1}</h3>
-                <img src={window.location.origin + this.props.currentQuestion.question} />
+                <img src={this.props.currentQuestion.question} />
                 {this.props.currentQuestion.choices.map((choice, i) => {
                     const choiceClass = i == this.props.selected ? "selected" : "not-selected";
                     return (
                         <div onClick={this.handleSelect} id={i} key={i} className={choiceClass}>
                             {i + 1 + ": "}
-                            <img src={window.location.origin + choice} />
+                            <img src={choice} />
                         </div>
                     );
                 })}
