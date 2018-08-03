@@ -9,7 +9,6 @@ class TestQuestion extends React.Component {
     handleSelect = (e) => {
         const selected = Number(e.currentTarget.id);
         this.props.handleChoose(selected);
-        console.log(window.location.origin)
     }
 
     render() {
