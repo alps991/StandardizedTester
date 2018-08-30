@@ -1,3 +1,16 @@
-.questionShortcut {
+.question-map {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: $s-size 0;
+}
+
+.question-shortcut {
     cursor: pointer;
+}
+
+@media (min-width: $desktop-breakpoint) {
+    .question-map {
+        display: inline-block;
+    }
 }

@@ -9,10 +9,10 @@ const QuestionMap = (props) => {
         }
     }
     return (
-        <div>
+        <div className="question-map">
             {checks.map((check, num) => (
                 <img
-                    className="questionShortcut"
+                    className="question-shortcut"
                     src={window.location.origin + check}
                     onClick={() => props.handleJump(num)}
                     key={num}

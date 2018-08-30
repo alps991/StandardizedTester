@@ -3,3 +3,29 @@
     margin: 0 auto;
     padding: 0 $m-size;
 }
+
+.tester__title {
+    margin: 0;
+}
+
+.tester button {
+    width: 50%;
+}
+
+.next-button {
+    float: right;
+}
+
+@media (min-width: $desktop-breakpoint) {
+    .tester__title {
+        margin: $s-size 0;
+    }
+
+    .tester button {
+        width: auto;
+    }
+
+    .next-button {
+        float: none;
+    }
+}

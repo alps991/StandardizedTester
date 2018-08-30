@@ -18,14 +18,15 @@ class TestQuestion extends React.Component {
             choiceList.push(`/images/${this.props.test}/question-${currentQuestion}-choice-${i + 1}.png`);
         }
         return (
-            <div>
-                <h3>Question {this.props.questionNumber + 1}</h3>
-                <img src={`/images/${this.props.test}/question-${currentQuestion}.png`} />
+            <div className="test-question">
+                <h3 className="test-question__title" >Question {this.props.questionNumber + 1}</h3>
+                <img src={`/images/${this.props.test}/question-${currentQuestion}.png`} className="question" />
                 {choiceList.map((choice, i) => {
                     const choiceClass = i == this.props.selected ? "selected" : "not-selected";
+                    const j = i + 1;
                     return (
-                        <div onClick={this.handleSelect} id={i} key={i} className={choiceClass}>
-                            {i + 1 + ": "}
+                        <div onClick={this.handleSelect} id={i} key={i} className={`${choiceClass} choice`}>
+                            {`(${j})`}
                             <img src={choice} />
                         </div>
                     );

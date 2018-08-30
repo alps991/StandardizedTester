@@ -4,11 +4,20 @@ import TestQuestion from './TestQuestion';
 import CompletionModal from './CompletionModal';
 import ExitModal from './ExitModal';
 import QuestionMap from './QuestionMap';
+import Timer from './Timer';
 import answerKey from '../data/answerKey';
+import { Redirect } from 'react-router-dom';
 
 class Tester extends React.Component {
 
-    answers = answerKey[this.props.match.params.id].answers;
+    constructor(props) {
+        super(props);
+        if (Object.keys(answerKey).includes(this.props.match.params.id)) {
+            this.answers = answerKey[this.props.match.params.id].answers;
+        } else {
+            this.answers = null;
+        }
+    }
 
     state = {
         questionNumber: 0,
@@ -39,7 +48,11 @@ class Tester extends React.Component {
     handleChoose = (chosen) => {
         this.setState((prevState) => {
             let chosenAnswers = prevState.chosenAnswers;
-            chosenAnswers[prevState.questionNumber] = chosen;
+            if (chosenAnswers[prevState.questionNumber] == chosen) {
+                chosenAnswers[prevState.questionNumber] = null;
+            } else {
+                chosenAnswers[prevState.questionNumber] = chosen;
+            }
             return {
                 chosenAnswers
             }
@@ -71,9 +84,14 @@ class Tester extends React.Component {
     }
 
     render() {
+        if (this.answers == null) {
+            return <Redirect to="/404" />;
+        }
+
         return (
             <div className="tester">
-                <h2>Geometry Test 1</h2>
+                <h2 className="tester__title">Geometry Test 1</h2>
+                <Timer />
                 <TestQuestion
                     questionNumber={this.state.questionNumber}
                     numberOfQuestions={answerKey[this.props.match.params.id].numberOfQuestions[this.state.questionNumber]}
@@ -82,16 +100,16 @@ class Tester extends React.Component {
                     handleChoose={this.handleChoose}
                     selected={this.state.chosenAnswers[this.state.questionNumber]}
                 />
-                <button className="button" onClick={this.handleGrade}>Grade Test</button>
-                {this.state.questionNumber > 0 && <button className="button" onClick={this.handleBack}>Back</button>}
-                {this.state.questionNumber < this.answers.length - 1 && <button className="button" onClick={this.handleNext}>Next</button>}
-                <button className="button" onClick={() => this.setState(() => ({ exitting: true }))}>Quit Test</button>
+                <button className="button" onClick={this.handleBack} disabled={this.state.questionNumber <= 0}>Back</button>
+                <button className="button next-button" onClick={this.handleNext} disabled={this.state.questionNumber >= this.answers.length - 1}>Next</button>
                 <QuestionMap
                     chosenAnswers={this.state.chosenAnswers}
                     testLength={this.answers.length}
                     handleJump={this.handleJump}
                     questionNumber={this.state.questionNumber}
                 />
+                <button className="button" onClick={this.handleGrade}>Grade Test</button>
+                <button className="button" onClick={() => this.setState(() => ({ exitting: true }))}>Quit Test</button>
                 <CompletionModal
                     complete={this.state.complete}
                     correct={this.state.numCorrect}
