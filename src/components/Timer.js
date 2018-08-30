@@ -18,6 +18,14 @@ class Timer extends React.Component {
         }, 1000)
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (this.props.startTime.format() != nextProps.startTime.format()) {
+            this.setState(() => ({
+                timeLeft: moment.duration(90, 'minutes')
+            }));
+        }
+    }
+
     render() {
         return (
             <div>

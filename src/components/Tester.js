@@ -7,6 +7,7 @@ import QuestionMap from './QuestionMap';
 import Timer from './Timer';
 import answerKey from '../data/answerKey';
 import { Redirect } from 'react-router-dom';
+import moment from 'moment';
 
 class Tester extends React.Component {
 
@@ -24,7 +25,8 @@ class Tester extends React.Component {
         chosenAnswers: [],
         complete: false,
         exitting: false,
-        numCorrect: 0
+        numCorrect: 0,
+        startTime: moment()
     }
 
     handleNext = () => {
@@ -75,7 +77,8 @@ class Tester extends React.Component {
             questionNumber: 0,
             chosenAnswers: [],
             complete: false,
-            numCorrect: 0
+            numCorrect: 0,
+            startTime: moment()
         }));
     }
 
@@ -90,8 +93,10 @@ class Tester extends React.Component {
 
         return (
             <div className="tester">
-                <h2 className="tester__title">Geometry Test 1</h2>
-                <Timer />
+                <div className="tester__header">
+                    <h2 className="tester__title">Geometry Test 1</h2>
+                    <Timer startTime={this.state.startTime} />
+                </div>
                 <TestQuestion
                     questionNumber={this.state.questionNumber}
                     numberOfQuestions={answerKey[this.props.match.params.id].numberOfQuestions[this.state.questionNumber]}

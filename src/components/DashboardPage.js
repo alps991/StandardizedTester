@@ -7,11 +7,11 @@ class DashboardPage extends React.Component {
             <div className="dashboard">
                 <h1>Welcome to the Standardized Tester!</h1>
                 <h2>Choose your test:</h2>
+                <Link className="header__title" to="/tests/algebra-1-test-1">
+                    <button className="button">Algebra Test 1</button>
+                </Link>
                 <Link className="header__title" to="/tests/geometry-test-1">
                     <button className="button">Geometry Test 1</button>
-                </Link>
-                <Link className="header__title" to="/tests/algebra-test-1">
-                    <button className="button">Algebra Test 1</button>
                 </Link>
             </div>
         );
