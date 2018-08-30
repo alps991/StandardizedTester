@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import TestQuestion from './TestQuestion';
 import CompletionModal from './CompletionModal';
 import ExitModal from './ExitModal';
@@ -13,8 +12,9 @@ class Tester extends React.Component {
 
     constructor(props) {
         super(props);
-        if (Object.keys(answerKey).includes(this.props.match.params.id)) {
-            this.answers = answerKey[this.props.match.params.id].answers;
+        let test = this.props.match.params.id;
+        if (Object.keys(answerKey).includes(test)) {
+            this.answers = answerKey[test].answers;
         } else {
             this.answers = null;
         }
@@ -94,7 +94,7 @@ class Tester extends React.Component {
         return (
             <div className="tester">
                 <div className="tester__header">
-                    <h2 className="tester__title">Geometry Test 1</h2>
+                    <h2 className="tester__title">{answerKey[this.props.match.params.id].testName}</h2>
                     <Timer startTime={this.state.startTime} />
                 </div>
                 <TestQuestion
