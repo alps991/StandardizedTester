@@ -1,6 +1,7 @@
-export const startTest = (test) => ({
+export const startTest = ({ subject, number }) => ({
     type: 'START_TEST',
-    test
+    subject,
+    number
 });
 
 export const finishTest = () => ({

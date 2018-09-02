@@ -2,12 +2,12 @@ export default (state = {}, action) => {
     switch (action.type) {
         case 'START_TEST':
             return {
-                ...state,
-                isTesting: true
+                isTesting: true,
+                subject: action.subject,
+                number: action.number
             }
-        case 'END_TEST':
+        case 'FINISH_TEST':
             return {
-                ...state,
                 isTesting: false
             }
         default:
