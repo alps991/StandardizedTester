@@ -3,3 +3,14 @@
     margin: 0 auto;
     padding: 0 $m-size;
 }
+
+.subjects {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 60%;
+}
+
+.selected {
+    background-color: $dark-blue;
+}

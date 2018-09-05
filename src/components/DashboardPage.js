@@ -43,15 +43,36 @@ class DashboardPage extends React.Component {
             <div className="dashboard">
                 <h1>Welcome to the Standardized Tester!</h1>
                 <h2>Choose your subject:</h2>
-                <button className="button" onClick={() => this.selectSubject("algebra-1")}>Algebra 1</button>
-                <button className="button" onClick={() => this.selectSubject("geometry")}>Geometry</button>
-                <button className="button" onClick={() => this.selectSubject("algebra-2")}>Algebra 2</button>
+                <div className="subjects">
+                    <button
+                        className={this.state.selectedSubject == "algebra-1" ? "button selected" : "button"}
+                        onClick={() => this.selectSubject("algebra-1")}
+                    >
+                        Algebra 1
+                    </button>
+                    <button
+                        className={this.state.selectedSubject == "geometry" ? "button selected" : "button"}
+                        onClick={() => this.selectSubject("geometry")}
+                    >
+                        Geometry
+                    </button>
+                    <button
+                        className={this.state.selectedSubject == "algebra-2" ? "button selected" : "button"}
+                        onClick={() => this.selectSubject("algebra-2")}
+                    >
+                        Algebra 2
+                        </button>
+                </div>
                 {this.state.selectedSubject && (
                     <div>
                         <h2>Choose your test:</h2>
                         {answerKey[this.state.selectedSubject].map((test, i) => {
                             return (
-                                <button className="button" key={i} onClick={() => this.selectTestNumber(i)}>
+                                <button
+                                    className={this.state.selectedTestNumber == i ? "button selected" : "button"}
+                                    key={i}
+                                    onClick={() => this.selectTestNumber(i)}
+                                >
                                     {test.testName}
                                 </button>
                             );
