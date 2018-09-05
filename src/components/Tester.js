@@ -7,12 +7,16 @@ import Timer from './Timer';
 import answerKey from '../data/answerKey';
 import moment from 'moment';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import { startSaveTest } from '../actions/pastTests';
 
 class Tester extends React.Component {
 
     constructor(props) {
         super(props);
-        this.test = answerKey[this.props.subject][this.props.testNumber];
+        if (this.props.subject) {
+            this.test = answerKey[this.props.subject][this.props.testNumber];
+        }
     }
 
     state = {
@@ -61,6 +65,20 @@ class Tester extends React.Component {
         this.test.answers.forEach((answer, i) => {
             answer === this.state.chosenAnswers[i] && numCorrect++;
         });
+
+        console.log({
+            subject: this.props.subject,
+            testNumber: this.props.testNumber,
+            chosenAnswers: this.state.chosenAnswers,
+            grade: (numCorrect * 100) / this.test.answers.length
+
+        })
+        this.props.startSaveTest({
+            subject: this.props.subject,
+            testNumber: this.props.testNumber,
+            chosenAnswers: this.state.chosenAnswers,
+            grade: (numCorrect * 100) / this.test.answers.length
+        })
         this.setState(() => ({
             complete: true,
             numCorrect
@@ -82,6 +100,9 @@ class Tester extends React.Component {
     }
 
     render() {
+        if (!this.props.subject) {
+            return <Redirect to="/" />
+        }
         return (
             <div className="tester">
                 <div className="tester__header">
@@ -128,9 +149,13 @@ class Tester extends React.Component {
     }
 }
 
+const mapDispatchtoProps = (dispatch) => ({
+    startSaveTest: (testData) => dispatch(startSaveTest(testData))
+});
+
 const mapStatetoProps = (state) => ({
     subject: state.testing.subject,
     testNumber: state.testing.number
 });
 
-export default connect(mapStatetoProps)(Tester);
+export default connect(mapStatetoProps, mapDispatchtoProps)(Tester);

@@ -3,6 +3,7 @@ import answerKey from '../data/answerKey';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { startTest } from '../actions/testing';
+import { startSetPastTests } from '../actions/pastTests';
 
 class DashboardPage extends React.Component {
 
@@ -69,6 +70,7 @@ class DashboardPage extends React.Component {
                             >
                                 Start
                             </button>
+                            {this.props.pastTests.filter((test) => test.subject == this.state.selectedSubject).map((test) => <span>{test.grade}</span>)}
                         </Link>
                     </div>
                 )}
@@ -78,7 +80,12 @@ class DashboardPage extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    startTest: (test) => dispatch(startTest(test))
+    startTest: (test) => dispatch(startTest(test)),
+    startSetPastTests: () => dispatch(startSetPastTests())
 });
 
-export default connect(undefined, mapDispatchToProps)(DashboardPage);
+const mapStateToProps = (state) => ({
+    pastTests: state.pastTests
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(DashboardPage);
