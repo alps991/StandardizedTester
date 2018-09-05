@@ -2,13 +2,11 @@ import React from 'react';
 
 class TestQuestion extends React.Component {
 
-    handleSubmit = () => {
-        this.props.handleNext(this.props.selected);
-    }
-
     handleSelect = (e) => {
-        const selected = Number(e.currentTarget.id);
-        this.props.handleChoose(selected);
+        if (!this.props.reviewMode) {
+            const selected = Number(e.currentTarget.id);
+            this.props.handleChoose(selected);
+        }
     }
 
     render() {
@@ -22,10 +20,10 @@ class TestQuestion extends React.Component {
                 <h3 className="test-question__title" >Question {this.props.questionNumber + 1}</h3>
                 <img src={`/images/${this.props.test}/question-${currentQuestion}.png`} className="question" />
                 {choiceList.map((choice, i) => {
-                    const choiceClass = i == this.props.selected ? "selected" : "not-selected";
+                    const choiceClass = i == this.props.selected ? "choice choice__selected" : "choice";
                     const j = i + 1;
                     return (
-                        <div onClick={this.handleSelect} id={i} key={i} className={`${choiceClass} choice`}>
+                        <div onClick={this.handleSelect} id={i} key={i} className={choiceClass}>
                             {`(${j})`}
                             <img src={choice} />
                         </div>

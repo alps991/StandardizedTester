@@ -6,11 +6,18 @@
 
 .subjects {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 60%;
+    width: 100%;
 }
 
 .selected {
     background-color: $dark-blue;
+}
+
+@media (min-width: $desktop-breakpoint) {
+
+    .subjects {
+        justify-content: space-between;
+        width: 60%;
+    }
+
 }

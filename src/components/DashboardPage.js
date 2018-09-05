@@ -39,6 +39,18 @@ class DashboardPage extends React.Component {
     }
 
     render() {
+
+        let pastTestData = this.props.pastTests.filter((test) => {
+            return test.subject == this.state.selectedSubject && test.testNumber == this.state.selectedTestNumber;
+        });
+
+        if (pastTestData) {
+            var best = 0;
+            pastTestData.forEach((test) => {
+                best = Math.max(best, test.grade);
+            });
+        }
+
         return (
             <div className="dashboard">
                 <h1>Welcome to the Standardized Tester!</h1>
@@ -81,6 +93,7 @@ class DashboardPage extends React.Component {
                 )}
                 {this.state.selectedTestNumber >= 0 && (
                     <div>
+                        {pastTestData && <h3>Your previous best: {best}%</h3>}
                         <Link to={`/tests/${this.state.selectedSubject}-test-${this.state.selectedTestNumber + 1}/`}>
                             <button
                                 className="button"
@@ -91,7 +104,6 @@ class DashboardPage extends React.Component {
                             >
                                 Start
                             </button>
-                            {this.props.pastTests.filter((test) => test.subject == this.state.selectedSubject).map((test) => <span>{test.grade}</span>)}
                         </Link>
                     </div>
                 )}

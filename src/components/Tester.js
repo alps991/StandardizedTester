@@ -9,6 +9,7 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { startSaveTest } from '../actions/pastTests';
+import { enterReviewMode } from '../actions/testing';
 
 class Tester extends React.Component {
 
@@ -22,7 +23,7 @@ class Tester extends React.Component {
     state = {
         questionNumber: 0,
         chosenAnswers: [],
-        complete: false,
+        grading: false,
         exitting: false,
         numCorrect: 0,
         startTime: moment()
@@ -65,22 +66,14 @@ class Tester extends React.Component {
         this.test.answers.forEach((answer, i) => {
             answer === this.state.chosenAnswers[i] && numCorrect++;
         });
-
-        console.log({
-            subject: this.props.subject,
-            testNumber: this.props.testNumber,
-            chosenAnswers: this.state.chosenAnswers,
-            grade: (numCorrect * 100) / this.test.answers.length
-
-        })
         this.props.startSaveTest({
             subject: this.props.subject,
             testNumber: this.props.testNumber,
             chosenAnswers: this.state.chosenAnswers,
-            grade: (numCorrect * 100) / this.test.answers.length
+            grade: Math.floor((numCorrect * 100) / this.test.answers.length)
         })
         this.setState(() => ({
-            complete: true,
+            grading: true,
             numCorrect
         }));
     }
@@ -89,14 +82,21 @@ class Tester extends React.Component {
         this.setState(() => ({
             questionNumber: 0,
             chosenAnswers: [],
-            complete: false,
+            grading: false,
             numCorrect: 0,
             startTime: moment()
         }));
     }
 
+    handleReview = () => {
+        this.props.enterReviewMode();
+        this.setState(() => ({
+            grading: false
+        }));
+    }
+
     closeModal = () => {
-        this.setState(() => ({ complete: false, exitting: false }));
+        this.setState(() => ({ grading: false, exitting: false }));
     }
 
     render() {
@@ -116,6 +116,7 @@ class Tester extends React.Component {
                     handleNext={this.handleNext}
                     handleChoose={this.handleChoose}
                     selected={this.state.chosenAnswers[this.state.questionNumber]}
+                    reviewMode={this.props.reviewMode}
                 />
                 <button className="button" onClick={this.handleBack} disabled={this.state.questionNumber <= 0}>Back</button>
                 <button
@@ -131,14 +132,15 @@ class Tester extends React.Component {
                     handleJump={this.handleJump}
                     questionNumber={this.state.questionNumber}
                 />
-                <button className="button" onClick={this.handleGrade}>Grade Test</button>
+                <button className="button" onClick={this.handleGrade} disabled={this.props.reviewMode}>Grade Test</button>
                 <button className="button" onClick={() => this.setState(() => ({ exitting: true }))}>Quit Test</button>
                 <CompletionModal
-                    complete={this.state.complete}
+                    isOpen={this.state.grading}
                     correct={this.state.numCorrect}
                     total={this.test.answers.length}
-                    handleClick={this.closeModal}
+                    handleExit={this.closeModal}
                     handleRestart={this.handleRestart}
+                    handleReview={this.handleReview}
                 />
                 <ExitModal
                     exitting={this.state.exitting}
@@ -150,12 +152,14 @@ class Tester extends React.Component {
 }
 
 const mapDispatchtoProps = (dispatch) => ({
-    startSaveTest: (testData) => dispatch(startSaveTest(testData))
+    startSaveTest: (testData) => dispatch(startSaveTest(testData)),
+    enterReviewMode: () => dispatch(enterReviewMode())
 });
 
 const mapStatetoProps = (state) => ({
     subject: state.testing.subject,
-    testNumber: state.testing.number
+    testNumber: state.testing.number,
+    reviewMode: state.testing.reviewMode
 });
 
 export default connect(mapStatetoProps, mapDispatchtoProps)(Tester);
