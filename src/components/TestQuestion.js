@@ -17,13 +17,18 @@ class TestQuestion extends React.Component {
         for (let i = 0; i < this.props.numberOfQuestions; i++) {
             choiceList.push(`/images/${this.props.test}/question-${currentQuestion}-choice-${i + 1}.png`);
         }
+        const answers = answerKey[this.props.subject][this.props.testNumber].answers;
+
         return (
             <div className="test-question">
                 <h3 className="test-question__title" >Question {this.props.questionNumber + 1}</h3>
                 <img src={`/images/${this.props.test}/question-${currentQuestion}.png`} className="question" />
                 {choiceList.map((choice, i) => {
                     let choiceClass = i == this.props.selected ? "choice choice__selected" : "choice";
-                    choiceClass += this.props.reviewMode && answerKey[this.props.subject][this.props.testNumber].answers[currentQuestion - 1] == i ? " choice__correct" : "";
+                    if (this.props.reviewMode) {
+                        if (answers[currentQuestion - 1] == i) { choiceClass += " choice__correct"; }
+                        if (this.props.selected == i && answers[currentQuestion - 1] != i) { choiceClass += " choice__incorrect"; }
+                    }
                     const j = i + 1;
                     return (
                         <div onClick={this.handleSelect} id={i} key={i} className={choiceClass}>

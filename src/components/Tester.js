@@ -61,6 +61,17 @@ class Tester extends React.Component {
         });
     }
 
+    startHandleGrade = () => {
+        this.setState(() => ({ grading: true }));
+        if (this.state.chosenAnswers.length == this.test.answers.length) {
+            this.handleGrade();
+        }
+    }
+
+    handleQuitButton = () => {
+        this.props.reviewMode ? this.props.history.push("/dashboard") : this.setState(() => ({ exitting: true }));
+    }
+
     handleGrade = () => {
         let numCorrect = 0;
         this.test.answers.forEach((answer, i) => {
@@ -73,7 +84,6 @@ class Tester extends React.Component {
             grade: Math.floor((numCorrect * 100) / this.test.answers.length)
         })
         this.setState(() => ({
-            grading: true,
             numCorrect
         }));
     }
@@ -131,16 +141,16 @@ class Tester extends React.Component {
                     handleJump={this.handleJump}
                     questionNumber={this.state.questionNumber}
                 />
-                <button className="button" onClick={this.handleGrade} disabled={this.props.reviewMode}>Grade Test</button>
-                <button className="button" onClick={() => this.setState(() => ({ exitting: true }))}>Quit Test</button>
+                <button className="button" onClick={this.startHandleGrade} disabled={this.props.reviewMode}>Grade Test</button>
+                <button className="button" onClick={this.handleQuitButton}>Quit Test</button>
                 <CompletionModal
                     isOpen={this.state.grading}
                     correct={this.state.numCorrect}
                     total={this.test.answers.length}
                     handleExit={this.closeModal}
+                    handleGrade={this.handleGrade}
                     handleRestart={this.handleRestart}
                     handleReview={this.handleReview}
-                    ariaHideApp={false}
                 />
                 <ExitModal
                     exitting={this.state.exitting}

@@ -11,6 +11,7 @@ const ExitModal = (props) => (
         contentLabel="Selected Option"
         closeTimeoutMS={500}
         className="modal"
+        ariaHideApp={false}
     >
         <p>Are you sure you want to quit this test? All current progress will be lost.</p>
         <button className="button" onClick={props.handleClick}>Close</button>

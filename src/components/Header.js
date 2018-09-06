@@ -7,7 +7,7 @@ export const Header = (props) => (
     <header className="header">
         <div className="content-container">
             <div className="header__content">
-                {props.isTesting ? (
+                {props.isTesting && !props.reviewMode ? (
                     <div className="header__title">
                         <h1>Standardized Tester</h1>
                     </div>
@@ -24,7 +24,8 @@ export const Header = (props) => (
 );
 
 const mapStateToProps = (state) => ({
-    isTesting: state.testing.isTesting
+    isTesting: state.testing.isTesting,
+    reviewMode: state.testing.reviewMode
 });
 
 const mapDispatchToProps = (dispatch) => ({
