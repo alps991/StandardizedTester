@@ -3,7 +3,6 @@ import answerKey from '../data/answerKey';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { startTest } from '../actions/testing';
-import { startSetPastTests } from '../actions/pastTests';
 
 class DashboardPage extends React.Component {
 
@@ -107,14 +106,16 @@ class DashboardPage extends React.Component {
                         </Link>
                     </div>
                 )}
+                <Link to="/history">
+                    <button className="button">View Test History</button>
+                </Link>
             </div>
         );
     }
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    startTest: (test) => dispatch(startTest(test)),
-    startSetPastTests: () => dispatch(startSetPastTests())
+    startTest: (test) => dispatch(startTest(test))
 });
 
 const mapStateToProps = (state) => ({

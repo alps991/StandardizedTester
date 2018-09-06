@@ -22,7 +22,7 @@ class Tester extends React.Component {
 
     state = {
         questionNumber: 0,
-        chosenAnswers: [],
+        chosenAnswers: this.props.chosenAnswers || [],
         grading: false,
         exitting: false,
         numCorrect: 0,
@@ -101,12 +101,12 @@ class Tester extends React.Component {
 
     render() {
         if (!this.props.subject) {
-            return <Redirect to="/" />
+            return <Redirect to="/" />;
         }
         return (
             <div className="tester">
                 <div className="tester__header">
-                    <h2 className="tester__title">{this.test.testName}</h2>
+                    <h2 className="tester__title">{this.test.testName}{this.props.reviewMode && " - Review"}</h2>
                     <Timer startTime={this.state.startTime} />
                 </div>
                 <TestQuestion
@@ -159,7 +159,8 @@ const mapDispatchtoProps = (dispatch) => ({
 const mapStatetoProps = (state) => ({
     subject: state.testing.subject,
     testNumber: state.testing.number,
-    reviewMode: state.testing.reviewMode
+    reviewMode: state.testing.reviewMode,
+    chosenAnswers: state.testing.chosenAnswers
 });
 
 export default connect(mapStatetoProps, mapDispatchtoProps)(Tester);

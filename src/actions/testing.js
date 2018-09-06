@@ -8,6 +8,7 @@ export const finishTest = () => ({
     type: 'FINISH_TEST'
 });
 
-export const enterReviewMode = () => ({
-    type: 'ENTER_REVIEW_MODE'
+export const enterReviewMode = (chosenAnswers = []) => ({
+    type: 'ENTER_REVIEW_MODE',
+    chosenAnswers
 });

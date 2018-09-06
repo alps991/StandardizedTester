@@ -14,7 +14,8 @@ export default (state = {}, action) => {
         case 'ENTER_REVIEW_MODE':
             return {
                 ...state,
-                reviewMode: true
+                reviewMode: true,
+                chosenAnswers: action.chosenAnswers
             }
         default:
             return state;
