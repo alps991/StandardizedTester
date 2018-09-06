@@ -8,10 +8,15 @@ class TestHistory extends React.Component {
     render() {
         return (
             <div className="test-history">
-                <h2>Test History</h2>
+                <div className="test-history__header">
+                    <h1>Test History</h1>
+                    <Link to="/">
+                        <button className="button">Dashboard</button>
+                    </Link>
+                </div>
                 {this.props.pastTests.map((test, i) => {
                     return (
-                        <div key={i}>
+                        <div className="test-summary" key={i}>
                             <p>{answerKey[test.subject][test.testNumber].testName}</p>
                             <p>Grade: {test.grade}%</p>
                             <Link to={`/tests/${test.subject}-test-${test.testNumber + 1}/`}>
@@ -23,8 +28,7 @@ class TestHistory extends React.Component {
                                             number: test.testNumber
                                         });
                                         this.props.enterReviewMode(test.chosenAnswers);
-                                    }
-                                    }>
+                                    }}>
                                     Review Test
                                 </button>
                             </Link>

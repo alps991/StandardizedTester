@@ -20,4 +20,10 @@
         width: 60%;
     }
 
+    .dashboard__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
 }

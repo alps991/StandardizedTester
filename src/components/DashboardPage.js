@@ -52,7 +52,12 @@ class DashboardPage extends React.Component {
 
         return (
             <div className="dashboard">
-                <h1>Welcome to the Standardized Tester!</h1>
+                <div className="dashboard__header">
+                    <h1>Welcome to the Standardized Tester!</h1>
+                    <Link to="/history">
+                        <button className="button">Test History</button>
+                    </Link>
+                </div>
                 <h2>Choose your subject:</h2>
                 <div className="subjects">
                     <button
@@ -106,9 +111,6 @@ class DashboardPage extends React.Component {
                         </Link>
                     </div>
                 )}
-                <Link to="/history">
-                    <button className="button">View Test History</button>
-                </Link>
             </div>
         );
     }

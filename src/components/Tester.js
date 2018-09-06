@@ -116,7 +116,6 @@ class Tester extends React.Component {
                     handleNext={this.handleNext}
                     handleChoose={this.handleChoose}
                     selected={this.state.chosenAnswers[this.state.questionNumber]}
-                    reviewMode={this.props.reviewMode}
                 />
                 <button className="button" onClick={this.handleBack} disabled={this.state.questionNumber <= 0}>Back</button>
                 <button
@@ -141,10 +140,12 @@ class Tester extends React.Component {
                     handleExit={this.closeModal}
                     handleRestart={this.handleRestart}
                     handleReview={this.handleReview}
+                    ariaHideApp={false}
                 />
                 <ExitModal
                     exitting={this.state.exitting}
                     handleClick={this.closeModal}
+                    ariaHideApp={false}
                 />
             </div>
         );

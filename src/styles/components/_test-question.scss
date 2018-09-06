@@ -7,15 +7,18 @@
     margin: 0;
 }
 
-.choice__selected {
-    border: 1px solid black;
-    cursor: pointer;
-}
-
 .choice {
     cursor: pointer;
     padding: 0.75rem;
     display: flex;
+}
+
+.choice__selected {
+    border: 2px solid black;
+}
+
+.choice__correct {
+    background-color: #90EE90;
 }
 
 .choice img {

@@ -1,4 +1,6 @@
 import React from 'react';
+import answerKey from '../data/answerKey';
+import { connect } from 'react-redux';
 
 class TestQuestion extends React.Component {
 
@@ -20,7 +22,8 @@ class TestQuestion extends React.Component {
                 <h3 className="test-question__title" >Question {this.props.questionNumber + 1}</h3>
                 <img src={`/images/${this.props.test}/question-${currentQuestion}.png`} className="question" />
                 {choiceList.map((choice, i) => {
-                    const choiceClass = i == this.props.selected ? "choice choice__selected" : "choice";
+                    let choiceClass = i == this.props.selected ? "choice choice__selected" : "choice";
+                    choiceClass += this.props.reviewMode && answerKey[this.props.subject][this.props.testNumber].answers[currentQuestion - 1] == i ? " choice__correct" : "";
                     const j = i + 1;
                     return (
                         <div onClick={this.handleSelect} id={i} key={i} className={choiceClass}>
@@ -34,4 +37,10 @@ class TestQuestion extends React.Component {
     }
 }
 
-export default TestQuestion;
+const mapStateToProps = (state) => ({
+    subject: state.testing.subject,
+    testNumber: state.testing.number,
+    reviewMode: state.testing.reviewMode
+});
+
+export default connect(mapStateToProps)(TestQuestion);
