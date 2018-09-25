@@ -38,10 +38,13 @@ class DashboardPage extends React.Component {
     }
 
     render() {
-
-        let pastTestData = this.props.pastTests.filter((test) => {
-            return test.subject == this.state.selectedSubject && test.testNumber == this.state.selectedTestNumber;
-        });
+        let pastTestData;
+        console.log(this.props.pastTests);
+        if (this.props.pastTests && this.props.pastTests instanceof Array) {
+            pastTestData = this.props.pastTests.filter((test) => {
+                return test.subject == this.state.selectedSubject && test.testNumber == this.state.selectedTestNumber;
+            });
+        }
 
         if (pastTestData) {
             var best = 0;
