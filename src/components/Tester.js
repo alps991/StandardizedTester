@@ -81,7 +81,8 @@ class Tester extends React.Component {
             subject: this.props.subject,
             testNumber: this.props.testNumber,
             chosenAnswers: this.state.chosenAnswers,
-            grade: Math.floor((numCorrect * 100) / this.test.answers.length)
+            grade: Math.floor((numCorrect * 100) / this.test.answers.length),
+            timestamp: moment().format("MM/DD/YY, h:mm a")
         })
         this.setState(() => ({
             numCorrect
@@ -94,7 +95,7 @@ class Tester extends React.Component {
             chosenAnswers: [],
             grading: false,
             numCorrect: 0,
-            startTime: moment()
+            startTime: moment().format()
         }));
     }
 

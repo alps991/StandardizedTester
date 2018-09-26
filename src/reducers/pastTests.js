@@ -7,6 +7,8 @@ export default (state = {}, action) => {
             ];
         case 'SET_TESTS':
             return action.pastTests;
+        case 'CLEAR_TESTS':
+            return [];
         default:
             return state;
     }
