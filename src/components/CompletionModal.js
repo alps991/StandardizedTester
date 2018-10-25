@@ -36,7 +36,7 @@ class CompletionModal extends React.Component {
                         className="modal"
                         ariaHideApp={false}
                     >
-                        <p>You answered {this.props.correct} out of {this.props.total} questions correctly ({Math.floor(this.props.correct / this.props.total)}%)</p>
+                        <p>You answered {this.props.correct} out of {this.props.total} questions correctly ({Math.floor(this.props.correct * 100 / this.props.total)}%)</p>
                         <button className="button" onClick={() => {
                             this.props.handleExit();
                             this.props.history.push("/");

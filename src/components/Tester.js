@@ -95,7 +95,7 @@ class Tester extends React.Component {
             chosenAnswers: [],
             grading: false,
             numCorrect: 0,
-            startTime: moment().format()
+            startTime: moment()
         }));
     }
 
